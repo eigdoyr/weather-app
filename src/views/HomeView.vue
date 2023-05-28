@@ -12,13 +12,19 @@
         v-if="mapboxSearchResults"
         class="absolute bg-weather-secondary text-white w-full shadow-md py2 px-1 top-[66px]"
       >
-        <li
-          v-for="searchResult in mapboxSearchResults"
-          :key="searchResult.id"
-          class="py-2 cursor-pointer"
-        >
-          {{ searchResult.place_name }}
-        </li>
+        <p v-if="searchError">Uh-oh 😴 Something went wrog, please try again</p>
+        <p v-if="!serverError && mapboxSearchResults.length === 0">
+          Uh oh! 🙈 No results found, try a different term
+        </p>
+        <template v-else>
+          <li
+            v-for="searchResult in mapboxSearchResults"
+            :key="searchResult.id"
+            class="py-2 cursor-pointer"
+          >
+            {{ searchResult.place_name }}
+          </li>
+        </template>
       </ul>
     </div>
   </main>
@@ -33,19 +39,25 @@ const mapboxAPIKey =
 const searchQuery = ref("");
 const queryTimeout = ref(null);
 const mapboxSearchResults = ref(null);
+const searchError = ref(null);
 
+//Lazy search
 const getSearchResults = () => {
-  clearTimeout(queryTimeout.value); // Lazy search - clear default timeout when user enter a letter to search bar and when user stop typing this won't run again then reach out to lazy location api
+  clearTimeout(queryTimeout.value); // clear default timeout when user enter a letter to search bar and when user stop typing this won't run again then reach out to lazy location api
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== "") {
-      const result = await axios.get(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery.value}.json?access_token=${mapboxAPIKey}&types=place`
-      );
-      mapboxSearchResults.value = result.data.features;
-      // console.log(mapboxSearchResults.value);
+      try {
+        const result = await axios.get(
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${searchQuery.value}.json?access_token=${mapboxAPIKey}&types=place`
+        );
+        mapboxSearchResults.value = result.data.features;
+        // console.log(mapboxSearchResults.value);
+      } catch {
+        searchError.value = true;
+      }
       return;
     }
-    //This never gets executed if search is true
+    // This never gets executed if search is true
     mapboxSearchResults.value = null;
   }, 300);
 };
