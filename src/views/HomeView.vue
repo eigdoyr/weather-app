@@ -15,7 +15,7 @@
         <p v-if="searchError">
           Uh-oh 😴 Something went wrong, please try again
         </p>
-        <p v-if="!serverError && mapboxSearchResults.length === 0">
+        <p v-if="!searchError && mapboxSearchResults.length === 0">
           Uh oh! 🙈 No results found, try a different term
         </p>
         <template v-else>
