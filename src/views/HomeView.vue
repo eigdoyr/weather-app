@@ -1,38 +1,3 @@
-<template>
-  <main class="font-['Sora'] text-sm container text-white">
-    <div class="pt-4 mb-8 relative">
-      <input
-        @input="getSearchResults"
-        type="text"
-        v-model="searchQuery"
-        placeholder="Search for a city or state"
-        class="py-2 px-1 w-full bg-transparent border-b focus:border-white focus:outline-none"
-      />
-      <ul
-        v-if="mapboxSearchResults"
-        class="absolute bg-weather-secondary text-white w-full shadow-md py2 px-1 top-[66px]"
-      >
-        <p v-if="searchError">
-          Uh-oh 😴 Something went wrong, please try again
-        </p>
-        <p v-if="!searchError && mapboxSearchResults.length === 0">
-          Uh oh! 🙈 No results found, try a different term
-        </p>
-        <template v-else>
-          <li
-            @click="previewCity(searchResult)"
-            v-for="searchResult in mapboxSearchResults"
-            :key="searchResult.id"
-            class="py-2 cursor-pointer"
-          >
-            {{ searchResult.place_name }}
-          </li>
-        </template>
-      </ul>
-    </div>
-  </main>
-</template>
-
 <script setup>
 import { ref } from "vue";
 import axios from "axios";
@@ -82,5 +47,39 @@ const getSearchResults = () => {
   }, 300);
 };
 </script>
+<template>
+  <main class="font-['Sora'] text-sm container text-white">
+    <div class="pt-4 mb-8 relative">
+      <input
+        @input="getSearchResults"
+        type="text"
+        v-model="searchQuery"
+        placeholder="Search for a city or state"
+        class="py-2 px-1 w-full bg-transparent border-b focus:border-white focus:outline-none"
+      />
+      <ul
+        v-if="mapboxSearchResults"
+        class="absolute bg-weather-secondary text-white w-full shadow-md py2 px-1 top-[66px]"
+      >
+        <p v-if="searchError">
+          Uh-oh 😴 Something went wrong, please try again
+        </p>
+        <p v-if="!searchError && mapboxSearchResults.length === 0">
+          Uh oh! 🙈 No results found, try a different term
+        </p>
+        <template v-else>
+          <li
+            @click="previewCity(searchResult)"
+            v-for="searchResult in mapboxSearchResults"
+            :key="searchResult.id"
+            class="py-2 cursor-pointer"
+          >
+            {{ searchResult.place_name }}
+          </li>
+        </template>
+      </ul>
+    </div>
+  </main>
+</template>
 
 <style lang="scss" scoped></style>

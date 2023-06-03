@@ -1,3 +1,7 @@
+<script setup>
+import AsyncCityView from "../components/AsyncCityView.vue";
+</script>
+
 <template>
   <div>
     <Suspense>
@@ -8,7 +12,3 @@
     </Suspense>
   </div>
 </template>
-
-<script setup>
-import AsyncCityView from "../components/AsyncCityView.vue";
-</script>
