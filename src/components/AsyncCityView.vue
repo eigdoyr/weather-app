@@ -91,7 +91,7 @@ const removeCity = () => {
     <div class="max-w-screen-md w-full py-12">
       <div class="mx-8 text-white">
         <h2 class="mb-4">Hourly Weather</h2>
-        <div class="flex gap-10 overflow-x-scroll">
+        <div class="flex gap-10 overflow-x-scroll hide-scroll">
           <div
             v-for="hourData in weatherData.hourly"
             :key="hourData.dt"
@@ -155,3 +155,15 @@ const removeCity = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+</style>
