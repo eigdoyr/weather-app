@@ -7,7 +7,7 @@ import AsyncCityView from "../components/AsyncCityView.vue";
     <Suspense>
       <AsyncCityView />
       <template #fallback>
-        <p class="text-white p-4 text-center">Loading 😴💤</p>
+        <CityViewSkeleton />
       </template>
     </Suspense>
   </div>

@@ -26,6 +26,10 @@ const getWeatherData = async () => {
     console.log(err);
   }
 };
+
+// Flicker Delay
+await new Promise((res) => setTimeout(res, 1000));
+
 const weatherData = await getWeatherData();
 
 const router = useRouter();
